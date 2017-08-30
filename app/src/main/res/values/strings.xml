@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">DailyQuote</string>
+    <string name="i_want_my_daily_quote_now">I want my daily quote now!</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>
