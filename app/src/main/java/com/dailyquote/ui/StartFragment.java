@@ -22,6 +22,7 @@ public class StartFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_start, container, false);
 
        Button startButton = (Button) view.findViewById(R.id.btn_start);
+        startButton.getBackground().setAlpha(180);
 
         startButton.setOnClickListener(new View.OnClickListener() {
             @Override

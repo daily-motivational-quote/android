@@ -2,6 +2,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/ic_tree_view"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <com.dailyquote.view_utils.CustomTextView
@@ -14,23 +15,48 @@
 
         app:layout_marginLeftPercent = "10%"
         app:layout_marginStartPercent = "10%"
-        app:layout_marginTopPercent = "5%"
+        app:layout_marginTopPercent = "10%"
 
         android:text="Your quote of the day is:"
         android:textColor="@color/black"
-        android:textAlignment="center"
+        android:gravity="center"
         app:typefaceButtonAsset = "fonts/CoolCrayon.ttf"
         />
+
+    <ImageView
+        app:layout_widthPercent = "25%"
+        app:layout_heightPercent = "15%"
+        android:background="@drawable/ic_cloud"
+
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 
     <com.dailyquote.view_utils.CustomTextView
         android:id="@+id/tv_quote"
         app:layout_widthPercent = "80%"
         app:layout_heightPercent = "35%"
+
+        android:textColor = "@color/orange"
         android:layout_centerInParent="true"
-
-        android:textAlignment="center"
-
+        android:gravity="center"
         />
+
+
+        <ImageView
+            android:id="@+id/iv_options"
+            app:layout_widthPercent = "12%"
+            app:layout_heightPercent = "8%"
+            android:background="@drawable/ic_options_icon"
+
+            android:layout_alignParentBottom = "true"
+            android:layout_alignParentEnd = "true"
+            android:layout_alignParentRight = "true"
+
+            app:layout_marginRightPercent = "6%"
+            app:layout_marginBottomPercent = "5%"
+
+             />
 
 
 </android.support.percent.PercentRelativeLayout>

@@ -1,12 +1,13 @@
 <android.support.percent.PercentRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/ic_tree_view"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <Button
         android:id="@+id/btn_start"
         app:layout_widthPercent = "75%"
-        app:layout_heightPercent = "25%"
+        app:layout_heightPercent = "18%"
         android:background = "@drawable/custombutton"
 
         android:layout_centerInParent="true"
