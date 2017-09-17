@@ -1,6 +1,7 @@
 package com.dailyquote.ui;
 
 import android.app.Fragment;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.util.Log;
@@ -11,6 +12,7 @@ import android.widget.ImageView;
 
 import com.dailyquote.MainActivity;
 import com.dailyquote.R;
+import com.dailyquote.TestClass;
 import com.dailyquote.network.Quote;
 import com.dailyquote.view_utils.CustomButton;
 import com.dailyquote.view_utils.CustomTextView;
@@ -39,7 +41,10 @@ public class QuoteFragment extends Fragment {
         options.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                ((MainActivity) getActivity()).attachFragment(new AddQuoteFragment());
+                Intent intent;
+                intent = new Intent(getActivity(), TestClass.class);
+                startActivity(intent);
+               // ((MainActivity) getActivity()).attachFragment(new AddQuoteFragment());
             }
         });
 

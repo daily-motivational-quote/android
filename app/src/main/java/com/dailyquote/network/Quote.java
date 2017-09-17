@@ -6,15 +6,21 @@ package com.dailyquote.network;
 
 public class Quote {
     private String quoteMsg;
+    private String quoteDate;
 
     public Quote() {
     }
 
-    public Quote(String quoteMsg) {
+    public Quote(String quoteDate, String quoteMsg) {
         this.quoteMsg = quoteMsg;
+        this.quoteDate = quoteDate;
     }
 
     public String getQuoteMsg() {
         return quoteMsg;
+    }
+
+    public String getQuoteDate() {
+        return quoteDate;
     }
 }
