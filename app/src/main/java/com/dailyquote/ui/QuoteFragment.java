@@ -1,7 +1,9 @@
 package com.dailyquote.ui;
 
 import android.app.Fragment;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.util.Log;
@@ -29,12 +31,21 @@ import static android.content.ContentValues.TAG;
 
 public class QuoteFragment extends Fragment {
 
+    public static final String MY_PREFERENCES = "MyPrefs" ;
+    public static final String DATE_PREFERENCE = "DatePrefs";
+    public static final String QUOTE_PREFERENCE = "QuotePrefs";
+    public static final String DATE_EXTRA = "currentDate";
+    public static String currDate;
+    private View view;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_quote, container, false);
+        view = inflater.inflate(R.layout.fragment_quote, container, false);
 
-        displayRandomQuote(view);
+        getExtraArguments();
+        displayQuote();
+
 
         ImageView options = (ImageView) view.findViewById(R.id.iv_options);
 
@@ -52,13 +63,30 @@ public class QuoteFragment extends Fragment {
         return view;
     }
 
-    private void displayRandomQuote(View view) {
-        final CustomTextView tv = (CustomTextView) view.findViewById(R.id.tv_quote);
+    private void getExtraArguments() {
+        currDate = getArguments().getString(DATE_EXTRA);
+    }
 
+    private void displayQuote() {
+        SharedPreferences sharedPreferences = this.getActivity().getSharedPreferences(MY_PREFERENCES, Context.MODE_PRIVATE);
+        String storedDate = sharedPreferences.getString(DATE_PREFERENCE, null);
+
+        if(currDate.equals(storedDate)) {
+            String storedQuote = sharedPreferences.getString(QUOTE_PREFERENCE, null);
+            setQuote(storedQuote);
+
+        } else {
+            getRandomQuote();
+        }
+    }
+
+    private void getRandomQuote() {
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference databaseReference = database.getReference("quotes");
 
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+            private String quote;
+
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
@@ -69,8 +97,9 @@ public class QuoteFragment extends Fragment {
 
                     for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                         if (count == index) {
-                            String quote = snapshot.getValue(String.class);
-                            tv.setText(quote);
+                            quote = snapshot.getValue(String.class);
+                            setQuote(quote);
+                            savePreferences(quote);
                             return;
                         }
                         count++;
@@ -82,7 +111,22 @@ public class QuoteFragment extends Fragment {
             public void onCancelled(DatabaseError error) {
                 Log.w(TAG, "Failed to read value.", error.toException());
             }
+
         });
+    }
+
+    private void savePreferences(String quote) {
+        SharedPreferences sharedPreferences = this.getActivity().getSharedPreferences(MY_PREFERENCES, Context.MODE_PRIVATE);
+        SharedPreferences.Editor prefEditor = sharedPreferences.edit();
+
+        prefEditor.putString(DATE_PREFERENCE, currDate);
+        prefEditor.putString(QUOTE_PREFERENCE, quote);
+        prefEditor.apply();
+    }
+
+    private void setQuote (String quote) {
+        final CustomTextView tv = (CustomTextView) view.findViewById(R.id.tv_quote);
+        tv.setText(quote);
     }
 
 }
