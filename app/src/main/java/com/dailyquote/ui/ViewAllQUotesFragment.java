@@ -19,32 +19,40 @@ import java.util.ArrayList;
 
 public class ViewAllQUotesFragment extends Fragment {
 
+    public static ViewAllQUotesFragment newInstance() {
+        return new ViewAllQUotesFragment();
+    }
+
     public ViewAllQUotesFragment() {
-        // Required empty public constructor
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
 
         View view  = inflater.inflate(R.layout.fragment_view_all_quotes, container, false);
 
+        ArrayList<Quote> allQuotes = new ArrayList<>();
+        allQuotes.add(new Quote("1.02.2017", "tova e proba"));
+        allQuotes.add(new Quote("2.02.2017", "tova e proba"));
+        allQuotes.add(new Quote("4.02.2017", "tova e proba"));
+        allQuotes.add(new Quote("3.02.2017", "tova e proba"));
+        allQuotes.add(new Quote("5.02.2017", "tova e proba"));
+        allQuotes.add(new Quote("6.02.2017", "tova e proba"));
+        allQuotes.add(new Quote("7.02.2017", "tova e proba"));
+        allQuotes.add(new Quote("8.02.2017", "tova e proba"));
+        allQuotes.add(new Quote("9.02.2017", "tova e proba"));
+        allQuotes.add(new Quote("10.02.2017", "tova e proba"));
+        allQuotes.add(new Quote("11.02.2017", "tova e proba"));
+        allQuotes.add(new Quote("12.02.2017", "tova e proba"));
+
         RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.rv);
 
-        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(DailyQuoteApplication.getStaticContext());
+        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(mLayoutManager);
 
-        // specify an adapter (see also next example)
-        RecyclerView.Adapter mAdapter = new MyRecyclerViewAdapter(new ArrayList<Quote>());
-        recyclerView.setAdapter(mAdapter);
+        recyclerView.setAdapter(new MyRecyclerViewAdapter(allQuotes));
 
         return view;
     }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-    }
-
 }

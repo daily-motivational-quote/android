@@ -10,7 +10,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.dailyquote.MainActivity;
 import com.dailyquote.R;
 import com.dailyquote.network.DailyQuoteApplication;
 import com.google.firebase.database.DatabaseReference;
@@ -30,7 +29,6 @@ public class AddQuoteFragment extends Fragment {
         btnUploadQuote.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 uploadQuoteToDatabase(getTextFromEditText(view));
                 showToast();
                 goBackToQuoteOfTheDay();
@@ -54,12 +52,13 @@ public class AddQuoteFragment extends Fragment {
     }
 
     private void showToast() {
+        // TO DO: REWORK THIS WITH A CUSTOM CLASS
         Toast toast=Toast.makeText(DailyQuoteApplication.getStaticContext(),"Quote uploaded",Toast.LENGTH_SHORT);
         toast.setMargin(50,50);
         toast.show();
     }
 
     private void goBackToQuoteOfTheDay() {
-        ((MainActivity) getActivity()).attachFragment(new QuoteFragment());
+        // TO DO : IMPLEMENT THIS
     }
 }

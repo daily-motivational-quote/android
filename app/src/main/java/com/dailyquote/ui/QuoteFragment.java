@@ -1,22 +1,19 @@
 package com.dailyquote.ui;
 
-import android.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
-import com.dailyquote.MainActivity;
+import com.dailyquote.QuoteActivity;
 import com.dailyquote.R;
-import com.dailyquote.TestClass;
-import com.dailyquote.network.Quote;
-import com.dailyquote.view_utils.CustomButton;
 import com.dailyquote.view_utils.CustomTextView;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -38,6 +35,14 @@ public class QuoteFragment extends Fragment {
     public static String currDate;
     private View view;
 
+    public static QuoteFragment newInstance(String currDate) {
+        QuoteFragment quoteFragment = new QuoteFragment();
+        Bundle args = new Bundle();
+        args.putString(DATE_EXTRA, currDate);
+        quoteFragment.setArguments(args);
+        return quoteFragment;
+    }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -45,20 +50,16 @@ public class QuoteFragment extends Fragment {
 
         getExtraArguments();
         displayQuote();
-
+        setQuote("dsadsad");
 
         ImageView options = (ImageView) view.findViewById(R.id.iv_options);
 
         options.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                Intent intent;
-                intent = new Intent(getActivity(), TestClass.class);
-                startActivity(intent);
-               // ((MainActivity) getActivity()).attachFragment(new AddQuoteFragment());
+                // TO DO: IMPLEMENT THIS!
             }
         });
-
 
         return view;
     }
@@ -68,7 +69,7 @@ public class QuoteFragment extends Fragment {
     }
 
     private void displayQuote() {
-        SharedPreferences sharedPreferences = this.getActivity().getSharedPreferences(MY_PREFERENCES, Context.MODE_PRIVATE);
+        SharedPreferences sharedPreferences = getActivity().getSharedPreferences(MY_PREFERENCES, Context.MODE_PRIVATE);
         String storedDate = sharedPreferences.getString(DATE_PREFERENCE, null);
 
         if(currDate.equals(storedDate)) {
@@ -115,6 +116,11 @@ public class QuoteFragment extends Fragment {
         });
     }
 
+    private void setQuote (String quote) {
+        final CustomTextView tv = (CustomTextView) view.findViewById(R.id.tv_quote);
+        tv.setText(quote);
+    }
+
     private void savePreferences(String quote) {
         SharedPreferences sharedPreferences = this.getActivity().getSharedPreferences(MY_PREFERENCES, Context.MODE_PRIVATE);
         SharedPreferences.Editor prefEditor = sharedPreferences.edit();
@@ -123,10 +129,4 @@ public class QuoteFragment extends Fragment {
         prefEditor.putString(QUOTE_PREFERENCE, quote);
         prefEditor.apply();
     }
-
-    private void setQuote (String quote) {
-        final CustomTextView tv = (CustomTextView) view.findViewById(R.id.tv_quote);
-        tv.setText(quote);
-    }
-
 }

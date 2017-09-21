@@ -1,13 +1,13 @@
 package com.dailyquote;
 
-import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 
-import com.dailyquote.network.DailyQuoteApplication;
-import com.dailyquote.network.Quote;
-import com.dailyquote.ui.StartFragment;
+import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.ViewPager;
+
+import com.dailyquote.ui.QuoteFragment;
 import com.dailyquote.ui.ViewAllQUotesFragment;
 
 import java.util.ArrayList;
@@ -16,37 +16,27 @@ import java.util.ArrayList;
  * Created by stoyan-ivanov on 15.09.17.
  */
 
-public class TestClass extends AppCompatActivity {
+public class QuoteActivity extends FragmentActivity {
+    String currDate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.test_layout);
+        setContentView(R.layout.activity_quote);
 
-        ArrayList<Quote> allQuotes = new ArrayList<>();
-        allQuotes.add(new Quote("1.02.2017", "tova e proba"));
-        allQuotes.add(new Quote("2.02.2017", "tova e proba"));
-        allQuotes.add(new Quote("4.02.2017", "tova e proba"));
-        allQuotes.add(new Quote("3.02.2017", "tova e proba"));
-        allQuotes.add(new Quote("5.02.2017", "tova e proba"));
-        allQuotes.add(new Quote("6.02.2017", "tova e proba"));
-        allQuotes.add(new Quote("7.02.2017", "tova e proba"));
-        allQuotes.add(new Quote("8.02.2017", "tova e proba"));
-        allQuotes.add(new Quote("9.02.2017", "tova e proba"));
-        allQuotes.add(new Quote("10.02.2017", "tova e proba"));
-        allQuotes.add(new Quote("11.02.2017", "tova e proba"));
-        allQuotes.add(new Quote("12.02.2017", "tova e proba"));
+        currDate = getIntent().getStringExtra("currentDate");
 
+        ViewPager pager = (ViewPager) findViewById(R.id.view_pager);
+        FragmentPagerAdapter fragmentPagerAdapter = new MyPagerAdapter(getSupportFragmentManager(), getFragments());
+        pager.setAdapter(fragmentPagerAdapter);
+    }
 
+    private ArrayList<Fragment> getFragments() {
+        ArrayList<Fragment> fragments = new ArrayList<>();
 
-        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.rv);
+        fragments.add(QuoteFragment.newInstance(currDate));
+        fragments.add(ViewAllQUotesFragment.newInstance());
 
-        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(DailyQuoteApplication.getStaticContext());
-        recyclerView.setLayoutManager(mLayoutManager);
-
-        // specify an adapter (see also next example)
-        RecyclerView.Adapter mAdapter = new MyRecyclerViewAdapter(allQuotes);
-        recyclerView.setAdapter(mAdapter);
-
+        return fragments;
     }
 }
