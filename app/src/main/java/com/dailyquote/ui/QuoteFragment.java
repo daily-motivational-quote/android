@@ -12,15 +12,20 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
-import com.dailyquote.QuoteActivity;
 import com.dailyquote.R;
+import com.dailyquote.network.Quote;
 import com.dailyquote.view_utils.CustomTextView;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
+import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 import static android.content.ContentValues.TAG;
@@ -32,6 +37,7 @@ public class QuoteFragment extends Fragment {
     public static final String DATE_PREFERENCE = "DatePrefs";
     public static final String QUOTE_PREFERENCE = "QuotePrefs";
     public static final String DATE_EXTRA = "currentDate";
+    public static final String ALL_QUOTES_PREFERENCE = "AllQuotesPref";
     public static String currDate;
     private View view;
 
@@ -50,7 +56,6 @@ public class QuoteFragment extends Fragment {
 
         getExtraArguments();
         displayQuote();
-        setQuote("dsadsad");
 
         ImageView options = (ImageView) view.findViewById(R.id.iv_options);
 
@@ -101,6 +106,7 @@ public class QuoteFragment extends Fragment {
                             quote = snapshot.getValue(String.class);
                             setQuote(quote);
                             savePreferences(quote);
+                            saveToAllQuotes(quote);
                             return;
                         }
                         count++;
@@ -114,6 +120,35 @@ public class QuoteFragment extends Fragment {
             }
 
         });
+    }
+
+    private void saveToAllQuotes(String quote) {
+        SharedPreferences sharedPreferences = this.getActivity().getSharedPreferences(MY_PREFERENCES, Context.MODE_PRIVATE);
+        Gson gson = new Gson();
+        String json = sharedPreferences.getString(ALL_QUOTES_PREFERENCE, null);
+
+        if(json != null) {
+            Type type = new TypeToken<List<Quote>>(){}.getType();
+            List<Quote> allSavedQuotes = gson.fromJson(json, type);
+
+            allSavedQuotes.add(new Quote(currDate, quote));
+            pushToSharedPreferences(allSavedQuotes);
+        } else {
+            List<Quote> listOfQuotes = new ArrayList<>();
+            listOfQuotes.add(new Quote(currDate, quote));
+            pushToSharedPreferences(listOfQuotes);
+        }
+
+    }
+
+    private void pushToSharedPreferences(List<Quote> listOfQuotes) {
+        SharedPreferences sharedPreferences = this.getActivity().getSharedPreferences(MY_PREFERENCES, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+
+        Gson gson = new Gson();
+        String json = gson.toJson(listOfQuotes);
+        editor.putString(ALL_QUOTES_PREFERENCE, json);
+        editor.commit();
     }
 
     private void setQuote (String quote) {
