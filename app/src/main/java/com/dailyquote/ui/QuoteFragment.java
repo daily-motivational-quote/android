@@ -6,8 +6,10 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.PopupMenu;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -52,12 +54,25 @@ public class QuoteFragment extends Fragment {
         displayQuote();
         setQuote("dsadsad");
 
-        ImageView options = (ImageView) view.findViewById(R.id.iv_options);
+        final ImageView options = (ImageView) view.findViewById(R.id.iv_options);
 
         options.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                // TO DO: IMPLEMENT THIS!
+                PopupMenu popupMenu = new PopupMenu(getActivity(), options);
+                popupMenu.getMenuInflater().inflate(R.menu.popup_menu, popupMenu.getMenu());
+
+                popupMenu.show();
+                popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    @Override
+                    public boolean onMenuItemClick(MenuItem item) {
+                        switch(item.getItemId()) {
+                            case R.id.add_quote_option: ((QuoteActivity) getActivity()).replaceFragment(new AddQuoteFragment()); break;
+                            case R.id.change_background_option: ((QuoteActivity) getActivity()).replaceFragment(new AddQuoteFragment()); break;
+                        }
+                        return true;
+                    }
+                });
             }
         });
 
