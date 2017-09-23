@@ -5,8 +5,8 @@ package com.dailyquote.network;
  */
 
 public class Quote {
-    private String quoteDate;
     private String quoteMsg;
+    private String quoteDate;
 
     public Quote() {
     }

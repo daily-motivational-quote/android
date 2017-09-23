@@ -48,7 +48,6 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
                         quoteTextView.setVisibility(View.VISIBLE);
                     } else {
                         quoteTextView.setVisibility(View.GONE);
-                        dateTextView.setVisibility(View.VISIBLE);
                     }
                 }
             });

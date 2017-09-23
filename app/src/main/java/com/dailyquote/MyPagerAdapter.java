@@ -30,4 +30,9 @@ public class MyPagerAdapter extends FragmentPagerAdapter {
     public Fragment getItem(int position) {
         return fragments.get(position);
     }
+
+    @Override
+    public boolean isViewFromObject(View view, Object object) {
+        return false;
+    }
 }
