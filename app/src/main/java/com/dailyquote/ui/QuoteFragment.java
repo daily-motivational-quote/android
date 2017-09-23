@@ -36,6 +36,7 @@ public class QuoteFragment extends Fragment {
     public static final String DATE_EXTRA = "currentDate";
     public static String currDate;
     private View view;
+    private ImageView options;
 
     public static QuoteFragment newInstance(String currDate) {
         QuoteFragment quoteFragment = new QuoteFragment();
@@ -52,31 +53,39 @@ public class QuoteFragment extends Fragment {
 
         getExtraArguments();
         displayQuote();
-        setQuote("dsadsad");
 
-        final ImageView options = (ImageView) view.findViewById(R.id.iv_options);
+        options = (ImageView) view.findViewById(R.id.iv_options);
 
         options.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                PopupMenu popupMenu = new PopupMenu(getActivity(), options);
-                popupMenu.getMenuInflater().inflate(R.menu.popup_menu, popupMenu.getMenu());
-
-                popupMenu.show();
-                popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-                    @Override
-                    public boolean onMenuItemClick(MenuItem item) {
-                        switch(item.getItemId()) {
-                            case R.id.add_quote_option: ((QuoteActivity) getActivity()).replaceFragment(new AddQuoteFragment()); break;
-                            case R.id.change_background_option: ((QuoteActivity) getActivity()).replaceFragment(new AddQuoteFragment()); break;
-                        }
-                        return true;
-                    }
-                });
+                inflatePopUpMenu();
             }
         });
 
         return view;
+    }
+
+    private void inflatePopUpMenu() {
+        PopupMenu popupMenu = new PopupMenu(getActivity(), options);
+        popupMenu.getMenuInflater().inflate(R.menu.popup_menu, popupMenu.getMenu());
+        popupMenu.show();
+
+        popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                switch(item.getItemId()) {
+                    case R.id.add_quote_option:
+                            ((QuoteActivity) getActivity()).replaceFragment(new AddQuoteFragment());
+                            break;
+
+                    case R.id.change_background_option:
+                            ((QuoteActivity) getActivity()).replaceFragment(new AddQuoteFragment());
+                            break;
+                }
+                return true;
+            }
+        });
     }
 
     private void getExtraArguments() {
