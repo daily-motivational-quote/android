@@ -3,6 +3,7 @@ package com.dailyquote.ui;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +21,8 @@ import com.google.firebase.database.FirebaseDatabase;
  */
 
 public class AddQuoteFragment extends Fragment {
+    EditText etQuote;
+
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_add_quote, container, false);
 
@@ -31,7 +34,7 @@ public class AddQuoteFragment extends Fragment {
             public void onClick(View v) {
                 uploadQuoteToDatabase(getTextFromEditText(view));
                 showToast();
-                goBackToQuoteOfTheDay();
+                etQuote.setText("");
             }
         });
 
@@ -39,7 +42,7 @@ public class AddQuoteFragment extends Fragment {
     }
 
     private String getTextFromEditText(View view) {
-        final EditText etQuote = (EditText) view.findViewById(R.id.et_add_quote);
+        etQuote = (EditText) view.findViewById(R.id.et_add_quote);
 
         return etQuote.getText().toString();
     }
@@ -48,13 +51,13 @@ public class AddQuoteFragment extends Fragment {
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference databaseReference = database.getReference("quotes");
 
-        databaseReference.setValue(quote);
+        databaseReference.push().setValue(quote);
     }
 
     private void showToast() {
         // TO DO: REWORK THIS WITH A CUSTOM CLASS
-        Toast toast=Toast.makeText(DailyQuoteApplication.getStaticContext(),"Quote uploaded",Toast.LENGTH_SHORT);
-        toast.setMargin(50,50);
+        Toast toast=Toast.makeText(getActivity(),"Quote uploaded",Toast.LENGTH_SHORT);
+        toast.setGravity(Gravity.BOTTOM|Gravity.CENTER_HORIZONTAL, 0, 100);
         toast.show();
     }
 
