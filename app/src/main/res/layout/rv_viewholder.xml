@@ -1,45 +1,48 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version = "1.0" encoding = "utf-8"?>
 <android.support.percent.PercentRelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:card_view="http://schemas.android.com/tools"
-    android:orientation="vertical"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    xmlns:android = "http://schemas.android.com/apk/res/android"
+    xmlns:app = "http://schemas.android.com/apk/res-auto"
+    xmlns:card_view = "http://schemas.android.com/tools"
+    android:orientation = "vertical"
+    android:layout_width = "match_parent"
+    android:layout_height = "wrap_content">
 
     <android.support.v7.widget.CardView
-        android:id="@+id/cv"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:id = "@+id/cv"
+        android:layout_width = "match_parent"
+        android:layout_height = "match_parent"
 
-        app:cardElevation="2dp"
-        card_view:cardCornerRadius="4dp"
-        app:cardUseCompatPadding="true"
+        app:cardElevation = "2dp"
+        card_view:cardCornerRadius = "4dp"
+        app:cardUseCompatPadding = "true"
         >
 
         <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:layout_width = "match_parent"
+            android:layout_height = "match_parent"
+            android:orientation = "vertical">
 
-            <TextView
-                android:id="@+id/viewholder_date"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+            <com.dailyquote.view_utils.CustomTextView
+                android:id = "@+id/viewholder_date"
+                android:layout_width = "match_parent"
+                android:layout_height = "70dp"
 
-                android:textSize="40sp"
-                android:textColor="@color/white"
-                android:background="#2b1100"
+                android:gravity = "center"
+                android:textColor = "@color/white"
+                android:background = "#2b1100"
+                android:alpha = "0.9557"
                 />
 
-            <TextView
-                android:id="@+id/viewholder_quote"
-                android:layout_below="@+id/viewholder_date"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+            <com.dailyquote.view_utils.CustomTextView
+                android:id = "@+id/viewholder_quote"
+                android:layout_width = "match_parent"
+                android:layout_height = "50dp"
 
-                android:textSize="30sp"
-                android:visibility="gone"
+                android:layout_below = "@+id/viewholder_date"
+                android:background = "#d3d3d3"
+
+                android:textColor = "@color/black"
+                android:visibility = "gone"
                 />
         </RelativeLayout>
 

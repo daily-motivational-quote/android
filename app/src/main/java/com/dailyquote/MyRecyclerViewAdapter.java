@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.dailyquote.network.Quote;
+import com.dailyquote.view_utils.CustomTextView;
 
 import java.util.ArrayList;
 
@@ -28,14 +29,14 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
 
     // stores and recycles views as they are scrolled off screen
     public class ViewHolder extends RecyclerView.ViewHolder {
-        public TextView dateTextView, quoteTextView;
+        public CustomTextView dateTextView, quoteTextView;
         CardView cardView;
 
         public ViewHolder(View itemView) {
             super(itemView);
             cardView = (CardView) itemView.findViewById(R.id.cv);
-            dateTextView = (TextView) itemView.findViewById(R.id.viewholder_date);
-            quoteTextView = (TextView) itemView.findViewById(R.id.viewholder_quote);
+            dateTextView = (CustomTextView) itemView.findViewById(R.id.viewholder_date);
+            quoteTextView = (CustomTextView) itemView.findViewById(R.id.viewholder_quote);
 
             attachOnClickListener();
         }

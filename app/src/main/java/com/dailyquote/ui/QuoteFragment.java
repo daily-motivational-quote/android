@@ -3,6 +3,7 @@ package com.dailyquote.ui;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.media.Image;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -13,8 +14,11 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 
+import com.dailyquote.QuoteActivity;
 import com.dailyquote.R;
+import com.dailyquote.animations.AnimationController;
 import com.dailyquote.network.Quote;
 import com.dailyquote.view_utils.CustomTextView;
 import com.google.firebase.database.DataSnapshot;
@@ -42,7 +46,8 @@ public class QuoteFragment extends Fragment {
     public static final String ALL_QUOTES_PREFERENCE = "AllQuotesPref";
     public static String currDate;
     private View view;
-    private ImageView options;
+    private ImageView options, cloud;
+
 
     public static QuoteFragment newInstance(String currDate) {
         QuoteFragment quoteFragment = new QuoteFragment();
@@ -59,6 +64,7 @@ public class QuoteFragment extends Fragment {
 
         getExtraArguments();
         displayQuote();
+        setAnimation();
 
         options = (ImageView) view.findViewById(R.id.iv_options);
 
@@ -144,6 +150,18 @@ public class QuoteFragment extends Fragment {
                 Log.w(TAG, "Failed to read value.", error.toException());
             }
 
+        });
+    }
+
+    private void setAnimation() {
+        final AnimationController animationController = new AnimationController();
+        cloud = (ImageView) view.findViewById(R.id.iv_cloud);
+
+        cloud.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                animationController.moveAnimationLeft(cloud);
+            }
         });
     }
 

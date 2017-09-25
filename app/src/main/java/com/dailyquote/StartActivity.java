@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.dailyquote.ui.QuoteFragment;
+import com.dailyquote.view_utils.CustomTextView;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -22,7 +23,7 @@ import static com.dailyquote.ui.QuoteFragment.DATE_PREFERENCE;
 
 public class StartActivity extends AppCompatActivity {
 
-    TextView dateWidget;
+    CustomTextView dateWidget;
     String currDate;
 
     @Override
@@ -46,7 +47,7 @@ public class StartActivity extends AppCompatActivity {
     }
 
     private void setDate() {
-        dateWidget = (TextView) findViewById(R.id.date_widget);
+        dateWidget = (CustomTextView) findViewById(R.id.date_widget);
         DateFormat df = new SimpleDateFormat("EEE, d MMM yyyy");
         currDate = df.format(Calendar.getInstance().getTime());
         dateWidget.setText(currDate);
